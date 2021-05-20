@@ -21,6 +21,6 @@ message Void { }
 
 service Todo{
   rpc Add (Item) returns (ID);
-  rpc Done (ID) returns (Void);
+  rpc Complete (ID) returns (Void);
   rpc List (Void) returns (Items);
 }

@@ -16,15 +16,15 @@ import (
 )
 
 const (
-	cmdAdd  string = "add"
-	cmdDone string = "done"
-	cmdList string = "list"
+	cmdAdd      string = "add"
+	cmdComplete string = "complete"
+	cmdList     string = "list"
 )
 
 var (
 	subCommands []string = []string{
 		cmdAdd,
-		cmdDone,
+		cmdComplete,
 		cmdList,
 	}
 )
@@ -48,8 +48,8 @@ func main() {
 	switch subCommand {
 	case cmdAdd:
 		err = add(context.Background(), todoClient, flag.Args()[1:])
-	case cmdDone:
-		err = done(context.Background(), todoClient, flag.Args()[1:])
+	case cmdComplete:
+		err = complete(context.Background(), todoClient, flag.Args()[1:])
 	case cmdList:
 		err = list(context.Background(), todoClient, flag.Args()[1:])
 	default:
@@ -80,7 +80,7 @@ func add(ctx context.Context, todoClient todo.TodoClient, args []string) error {
 	return nil
 }
 
-func done(ctx context.Context, todoClient todo.TodoClient, args []string) error {
+func complete(ctx context.Context, todoClient todo.TodoClient, args []string) error {
 	if len(args) != 1 {
 		return errors.New("invalid argument count")
 	}
@@ -90,7 +90,7 @@ func done(ctx context.Context, todoClient todo.TodoClient, args []string) error 
 		return err
 	}
 
-	_, err = todoClient.Done(ctx, &todo.ID{
+	_, err = todoClient.Complete(ctx, &todo.ID{
 		Value: int64(id),
 	})
 

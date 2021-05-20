@@ -45,7 +45,7 @@ func (s *todoServer) Add(ctx context.Context, item *todo.Item) (*todo.ID, error)
 	return item.ID, nil
 }
 
-func (s *todoServer) Done(ctx context.Context, id *todo.ID) (*todo.Void, error) {
+func (s *todoServer) Complete(ctx context.Context, id *todo.ID) (*todo.Void, error) {
 	var item *todo.Item
 	var ok bool
 
