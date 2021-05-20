@@ -14,18 +14,18 @@ mod:
 	go mod tidy
 	go mod download
 
-build-client:
+build-client: clean proto mod
 	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 GO111MODULE=on \
 	go build -installsuffix cgo -o client ./cmd/client
 
-build-service:
+build-service: clean proto mod
 	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 GO111MODULE=on \
 	go build -installsuffix cgo -o service ./cmd/service
 
 test:
 	go test -short ./...
 
-docker-service: COMMIT=${shell git log -1 --pretty=format:"%H"}
+docker: COMMIT=${shell git log -1 --pretty=format:"%H"}
 
-docker-service: clean proto build-service test
+docker: clean proto mod build-service test
 	docker build --build-arg=COMMIT=${COMMIT} -t wr4thon/todo:${COMMIT} -t wr4thon/todo:latest .
