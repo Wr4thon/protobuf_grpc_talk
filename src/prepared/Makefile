@@ -1,6 +1,6 @@
-.PHONY: all clean proto mod build test docker
+.PHONY: all clean proto mod build docker
 
-all: clean proto mod build test docker
+all: clean proto mod build docker
 
 clean:
 	rm -rf todo_grpc.pb.go todo.pb.go 2>/dev/null || true
@@ -22,10 +22,7 @@ build-service: clean proto mod
 	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 GO111MODULE=on \
 	go build -installsuffix cgo -o service ./cmd/service
 
-test:
-	go test -short ./...
-
 docker: COMMIT=${shell git log -1 --pretty=format:"%H"}
 
-docker: clean proto mod build-service test
+docker: clean proto mod build-service
 	docker build --build-arg=COMMIT=${COMMIT} -t wr4thon/todo:${COMMIT} -t wr4thon/todo:latest .
