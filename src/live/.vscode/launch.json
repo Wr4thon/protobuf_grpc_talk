@@ -18,10 +18,10 @@
       "mode": "auto",
       "program": "${workspaceFolder}/cmd/todoClient",
       "args": [
-        // "foo"
-        // "add", "prepare Talk"
+        //  "foo"
+        "add", "prepare Talk"
         // "list"
-        // "complete", "1"
+        //"complete", "1"
       ]
     }
   ]
