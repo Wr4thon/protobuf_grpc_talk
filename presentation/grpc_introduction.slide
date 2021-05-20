@@ -9,9 +9,7 @@ me@wr4thon.de
 
 - What is (g)RPC
 - What are protocol buffers
-- Setup (optional)
 - .proto files and their syntax
-- On messages and services
 - Live Coding
 - Pros & Cons
 - Q&A
@@ -26,8 +24,7 @@ me@wr4thon.de
 gRPC
 
 - open source RPC framework
-
-.link https://github.com/grpc/grpc-go/ grpc go implementation
+- uses protocol buffers
 
 * What are protocol buffers
 
@@ -36,37 +33,25 @@ gRPC
 - like JSON and co. just less
 - generates code
 
-.link https://developers.google.com/protocol-buffers google developers - protocol buffers
-
-* Setup (optional)
-
-> goto terminal
-
-* .proto files (and their syntax)
-
-.link https://github.com/Wr4thon/protobuf_grpc_talk/blob/master/src/prepared/todo.proto example: todo.proto
+* .proto files and their syntax
 
   syntax = "proto3";
   package demo;
   option go_package = "<path>/<to>/<package>";
 
+  // describes what the data looks like
   message Target { 
     string Name = 1;
   }
 
+  // definition of a contract
   service Greeter { 
     rpc Greet (Target) returns (Void)
   }
 
-* On messages and services
+generating the code:
 
-messages: 
-
-- description of data
-
-service:
-
-- definition of a contract
+  $ protoc --go_out=. --go-grpc_out=. ./demo.proto
 
 * Live Coding
 
